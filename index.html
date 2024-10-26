@@ -73,40 +73,45 @@
     }
 
     .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.7);
-    display: none; /* Change this from 'flex' to 'none' */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+      display: none;
+      /* Change this from 'flex' to 'none' */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
 
-  .loading-overlay.visible {
-    display: flex;
-  }
-  .center-screen {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 90vw; /* Prevents overflow on small screens */
-  width: 100%;
-  max-height: 90vh; /* Prevents overflow on small screens */
-  overflow-y: auto; /* Allows scrolling if content is too tall */
-}
+    .loading-overlay.visible {
+      display: flex;
+    }
 
-/* Adjust width for larger screens */
-@media (min-width: 768px) {
-  .center-screen {
-    width: auto;
-    min-width: 400px;
-    max-width: 500px;
-  }
-}
+    .center-screen {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      /* Prevents overflow on small screens */
+      width: 100%;
+      max-height: 90vh;
+      /* Prevents overflow on small screens */
+      overflow-y: auto;
+      /* Allows scrolling if content is too tall */
+    }
+
+    /* Adjust width for larger screens */
+    @media (min-width: 768px) {
+      .center-screen {
+        width: auto;
+        min-width: 400px;
+        max-width: 500px;
+      }
+    }
   </style>
 </head>
 
@@ -119,12 +124,14 @@
         <h1 class="text-2xl font-bold">מערכת ניהול רכבים</h1>
       </div>
       <div class="flex items-center">
-        <button id="refresh-button" class="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition duration-300 hidden text-sm md:text-base flex items-center">
+        <button id="refresh-button"
+          class="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition duration-300 hidden text-sm md:text-base flex items-center">
           <i class="fas fa-sync-alt mr-2"></i>
           <span>רענן נתונים</span>
         </button>
         <div class="w-2 md:w-4"></div> <!-- Spacer -->
-        <button id="logout-button" class="bg-white text-blue-600 px-3 py-2 rounded-md hover:bg-blue-100 transition duration-300 hidden text-sm md:text-base flex items-center">
+        <button id="logout-button"
+          class="bg-white text-blue-600 px-3 py-2 rounded-md hover:bg-blue-100 transition duration-300 hidden text-sm md:text-base flex items-center">
           <i class="fas fa-sign-out-alt mr-2"></i>
           <span>התנתק</span>
         </button>
@@ -147,8 +154,7 @@
               </label>
               <input type="email"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
-                id="email" name="email" required aria-label="כתובת אימייל" 
-                placeholder="הזן את כתובת האימייל שלך">
+                id="email" name="email" required aria-label="כתובת אימייל" placeholder="הזן את כתובת האימייל שלך">
             </div>
             <button type="submit"
               class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center">
@@ -164,515 +170,519 @@
           <ul id="car-items" class="space-y-4 mb-6"></ul>
           <div id="car-management-buttons" class="flex flex-col gap-4 md:flex-row">
             <div id="add-car-buttons" class="flex flex-col gap-2 md:flex-row">
-              <button id="add-car-employee" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300">
+              <button id="add-car-employee"
+                class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300">
                 <i class="fas fa-plus mr-2"></i><span class="ml-2">הוסף רכב עובד</span>
               </button>
-              <button id="add-car-guest" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+              <button id="add-car-guest"
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
                 <i class="fas fa-plus mr-2"></i><span class="ml-2">הוסף רכב אורח</span>
               </button>
             </div>
-            <button id="export-excel" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300">
+            <button id="export-excel"
+              class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300">
               <i class="fas fa-file-excel mr-2"></i>ייצא לאקסל
             </button>
           </div>
           <p id="employee-car-limit-message" class="text-red-500 mt-2 hidden">הגעת למכסה המקסימלית של רכבי עובד</p>
         </div>
-        
+
       </div>
     </div>
   </main>
 
 
-   <!-- Modal for editing car details -->
-   <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="editModal" aria-labelledby="modal-title" role="dialog"
-   aria-modal="true">
-   <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-     <div
-       class="inline-block align-bottom bg-white rounded-lg text-right overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-       <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-           עריכת פרטי רכב
-         </h3>
+  <!-- Modal for editing car details -->
+  <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="editModal" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <div
+        class="inline-block align-bottom bg-white rounded-lg text-right overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+            עריכת פרטי רכב
+          </h3>
 
-         <form id="editCarForm" class="mt-2">
-           <input type="hidden" id="editCarId" name="editCarId">
-           <div class="mb-3">
-             <label for="editFullName" class="block text-sm font-medium text-gray-700">שם מלא:</label>
-             <input type="text"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-               id="editFullName" name="editFullName" required aria-label="שם מלא">
-           </div>
-           <div class="mb-3">
-             <label for="editCarNumber" class="block text-sm font-medium text-gray-700">מספר רכב:</label>
-             <input type="text"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-               id="editCarNumber" name="editCarNumber" required aria-label="מספר רכב">
-           </div>
-           <div class="mb-3">
-             <label for="editPhoneNumber" class="block text-sm font-medium text-gray-700">מספר טלפון נייד:</label>
-             <input type="tel"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-               id="editPhoneNumber" name="editPhoneNumber" required aria-label="מספר טלפון נייד">
-           </div>
-           <div class="mb-3">
-             <label for="editPersonType" class="block text-sm font-medium text-gray-700">סוג אדם:</label>
-             <select
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-               id="editPersonType" name="editPersonType" required aria-label="סוג אדם">
-               <option value="Employee">עובד</option>
-               <option value="Guest">אורח</option>
-             </select>
-           </div>
-           <div id="editEmployeeFields" class="hidden">
-             <div class="mb-3">
-               <label for="editStartingDate" class="block text-sm font-medium text-gray-700">תאריך התחלה:</label>
-               <input type="date"
-                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                 id="editStartingDate" name="editStartingDate" aria-label="תאריך התחלה">
-             </div>
-           </div>
-           <div id="editGuestFields" class="hidden">
-             <div class="mb-3">
-               <label for="editGuestDate" class="block text-sm font-medium text-gray-700">תאריך אירוח:</label>
-               <input type="date"
-                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                 id="editGuestDate" name="editGuestDate" aria-label="תאריך אירוח">
-             </div>
-             <div class="mb-3">
-               <label for="editGuestHoursFrom" class="block text-sm font-medium text-gray-700">שעות אירוח - מ:</label>
-               <input type="time"
-                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                 id="editGuestHoursFrom" name="editGuestHoursFrom" aria-label="שעות אירוח - מ">
-             </div>
-             <div class="mb-3">
-               <label for="editGuestHoursTo" class="block text-sm font-medium text-gray-700">שעות אירוח - עד:</label>
-               <input type="time"
-                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                 id="editGuestHoursTo" name="editGuestHoursTo" aria-label="שעות אירוח - עד">
-             </div>
-           </div>
-         </form>
-       </div>
-       <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-         <button type="submit" form="editCarForm"
-           class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-           שמור שינויים
-         </button>
-         <button type="button"
-           class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-           onclick="CarManagementApp.closeEditModal()">
-           ביטול
-         </button>
-       </div>
-     </div>
-   </div>
- </div>
-
- <!-- Modal for adding a new car -->
- <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="addModal" aria-labelledby="modal-title" role="dialog"
-   aria-modal="true">
-   <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-     <div
-       class="inline-block align-bottom bg-white rounded-lg text-right overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-       <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-           הוספת רכב חדש
-         </h3>
-
-         <form id="addCarForm" class="mt-2">
-           <div class="mb-3">
-             <label for="addFullName" class="block text-sm font-medium text-gray-700">שם מלא:</label>
-             <input type="text"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-               id="addFullName" name="addFullName" required aria-label="שם מלא">
-           </div>
-           <div class="mb-3">
-             <label for="addCarNumber" class="block text-sm font-medium text-gray-700">מספר רכב:</label>
-             <input type="text"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-               id="addCarNumber" name="addCarNumber" required aria-label="מספר רכב">
-           </div>
-           <div class="mb-3">
-             <label for="addPhoneNumber" class="block text-sm font-medium text-gray-700">מספר טלפון נייד:</label>
-             <input type="tel"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-               id="addPhoneNumber" name="addPhoneNumber" required aria-label="מספר טלפון נייד">
-           </div>
-           <div class="mb-3">
-            <label for="addPersonType" class="block text-sm font-medium text-gray-700">סוג אדם:</label>
-            <select
-              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              id="addPersonType" name="addPersonType" required aria-label="סוג אדם">
-              <option value="Employee">עובד</option>
-              <option value="Guest">אורח</option>
-            </select>
-          </div>
-          <div id="addEmployeeFields" class="hidden">
+          <form id="editCarForm" class="mt-2">
+            <input type="hidden" id="editCarId" name="editCarId">
             <div class="mb-3">
-              <label for="addStartingDate" class="block text-sm font-medium text-gray-700">תאריך התחלה:</label>
-              <input type="date"
+              <label for="editFullName" class="block text-sm font-medium text-gray-700">שם מלא:</label>
+              <input type="text"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                id="addStartingDate" name="addStartingDate" aria-label="תאריך התחלה">
-            </div>
-          </div>
-          <div id="addGuestFields" class="hidden">
-            <div class="mb-3">
-              <label for="addGuestDate" class="block text-sm font-medium text-gray-700">תאריך אירוח:</label>
-              <input type="date"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                id="addGuestDate" name="addGuestDate" aria-label="תאריך אירוח">
+                id="editFullName" name="editFullName" required aria-label="שם מלא">
             </div>
             <div class="mb-3">
-              <label for="addGuestHoursFrom" class="block text-sm font-medium text-gray-700">שעות אירוח - מ:</label>
-              <input type="time"
+              <label for="editCarNumber" class="block text-sm font-medium text-gray-700">מספר רכב:</label>
+              <input type="text"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                id="addGuestHoursFrom" name="addGuestHoursFrom" aria-label="שעות אירוח - מ">
+                id="editCarNumber" name="editCarNumber" required aria-label="מספר רכב">
             </div>
             <div class="mb-3">
-              <label for="addGuestHoursTo" class="block text-sm font-medium text-gray-700">שעות אירוח - עד:</label>
-              <input type="time"
+              <label for="editPhoneNumber" class="block text-sm font-medium text-gray-700">מספר טלפון נייד:</label>
+              <input type="tel"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                id="addGuestHoursTo" name="addGuestHoursTo" aria-label="שעות אירוח - עד">
+                id="editPhoneNumber" name="editPhoneNumber" required aria-label="מספר טלפון נייד">
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        <button type="submit" form="addCarForm"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
-          הוסף רכב
-        </button>
-        <button type="button"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-          onclick="CarManagementApp.closeAddModal()">
-          ביטול
-        </button>
+            <div class="mb-3">
+              <label for="editPersonType" class="block text-sm font-medium text-gray-700">סוג אדם:</label>
+              <select
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                id="editPersonType" name="editPersonType" required aria-label="סוג אדם">
+                <option value="Employee">עובד</option>
+                <option value="Guest">אורח</option>
+              </select>
+            </div>
+            <div id="editEmployeeFields" class="hidden">
+              <div class="mb-3">
+                <label for="editStartingDate" class="block text-sm font-medium text-gray-700">תאריך התחלה:</label>
+                <input type="date"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="editStartingDate" name="editStartingDate" aria-label="תאריך התחלה">
+              </div>
+            </div>
+            <div id="editGuestFields" class="hidden">
+              <div class="mb-3">
+                <label for="editGuestDate" class="block text-sm font-medium text-gray-700">תאריך אירוח:</label>
+                <input type="date"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="editGuestDate" name="editGuestDate" aria-label="תאריך אירוח">
+              </div>
+              <div class="mb-3">
+                <label for="editGuestHoursFrom" class="block text-sm font-medium text-gray-700">שעות אירוח - מ:</label>
+                <input type="time"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="editGuestHoursFrom" name="editGuestHoursFrom" aria-label="שעות אירוח - מ">
+              </div>
+              <div class="mb-3">
+                <label for="editGuestHoursTo" class="block text-sm font-medium text-gray-700">שעות אירוח - עד:</label>
+                <input type="time"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="editGuestHoursTo" name="editGuestHoursTo" aria-label="שעות אירוח - עד">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button type="submit" form="editCarForm"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+            שמור שינויים
+          </button>
+          <button type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            onclick="CarManagementApp.closeEditModal()">
+            ביטול
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<footer class="bg-gray-800 text-white mt-auto">
-  <div class="container mx-auto px-4 py-6">
-    <div class="flex flex-col md:flex-row justify-between items-center">
-      <p>&copy; 2024 ABRA - מערכת ניהול רכבים. כל הזכויות שמורות.</p>
-      <div class="mt-4 md:mt-0 space-x-4">
-        <a href="#" class="text-white hover:text-blue-300 transition duration-300">תנאי שימוש</a>
-        <a href="#" class="text-white hover:text-blue-300 transition duration-300">מדיניות פרטיות</a>
-        <a href="mailto:sivan.rimon@abra-it.com" class="text-white hover:text-blue-300 transition duration-300">צור קשר</a>
+  <!-- Modal for adding a new car -->
+  <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="addModal" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <div
+        class="inline-block align-bottom bg-white rounded-lg text-right overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+            הוספת רכב חדש
+          </h3>
 
+          <form id="addCarForm" class="mt-2">
+            <div class="mb-3">
+              <label for="addFullName" class="block text-sm font-medium text-gray-700">שם מלא:</label>
+              <input type="text"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                id="addFullName" name="addFullName" required aria-label="שם מלא">
+            </div>
+            <div class="mb-3">
+              <label for="addCarNumber" class="block text-sm font-medium text-gray-700">מספר רכב:</label>
+              <input type="text"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                id="addCarNumber" name="addCarNumber" required aria-label="מספר רכב">
+            </div>
+            <div class="mb-3">
+              <label for="addPhoneNumber" class="block text-sm font-medium text-gray-700">מספר טלפון נייד:</label>
+              <input type="tel"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                id="addPhoneNumber" name="addPhoneNumber" required aria-label="מספר טלפון נייד">
+            </div>
+            <div class="mb-3">
+              <label for="addPersonType" class="block text-sm font-medium text-gray-700">סוג אדם:</label>
+              <select
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                id="addPersonType" name="addPersonType" required aria-label="סוג אדם">
+                <option value="Employee">עובד</option>
+                <option value="Guest">אורח</option>
+              </select>
+            </div>
+            <div id="addEmployeeFields" class="hidden">
+              <div class="mb-3">
+                <label for="addStartingDate" class="block text-sm font-medium text-gray-700">תאריך התחלה:</label>
+                <input type="date"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="addStartingDate" name="addStartingDate" aria-label="תאריך התחלה">
+              </div>
+            </div>
+            <div id="addGuestFields" class="hidden">
+              <div class="mb-3">
+                <label for="addGuestDate" class="block text-sm font-medium text-gray-700">תאריך אירוח:</label>
+                <input type="date"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="addGuestDate" name="addGuestDate" aria-label="תאריך אירוח">
+              </div>
+              <div class="mb-3">
+                <label for="addGuestHoursFrom" class="block text-sm font-medium text-gray-700">שעות אירוח - מ:</label>
+                <input type="time"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="addGuestHoursFrom" name="addGuestHoursFrom" aria-label="שעות אירוח - מ">
+              </div>
+              <div class="mb-3">
+                <label for="addGuestHoursTo" class="block text-sm font-medium text-gray-700">שעות אירוח - עד:</label>
+                <input type="time"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  id="addGuestHoursTo" name="addGuestHoursTo" aria-label="שעות אירוח - עד">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button type="submit" form="addCarForm"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+            הוסף רכב
+          </button>
+          <button type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            onclick="CarManagementApp.closeAddModal()">
+            ביטול
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-<script>
-// Main application module
-const CarManagementApp = (function () {
-  let userCars = [];
-  let userEmail = '';
-  let isEmployee = false;
-  let currentAddCarType = '';
+  <footer class="bg-gray-800 text-white mt-auto">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p>&copy; 2024 ABRA - מערכת ניהול רכבים. כל הזכויות שמורות.</p>
+        <div class="mt-4 md:mt-0 space-x-4">
+          <a href="#" class="text-white hover:text-blue-300 transition duration-300">תנאי שימוש</a>
+          <a href="#" class="text-white hover:text-blue-300 transition duration-300">מדיניות פרטיות</a>
+          <a href="mailto:sivan.rimon@abra-it.com" class="text-white hover:text-blue-300 transition duration-300">צור
+            קשר</a>
 
-  const API_URL = 'https://prod-205.westeurope.logic.azure.com:443/workflows/1c6ac94dabbc496abd2ced8e2d0d610b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1n-Cl11CMQ2ymC6sy1P1d-oM9sp_UdHFNE_c-sK4gws';
+        </div>
+      </div>
+    </div>
+  </footer>
 
-  // DOM Elements
-  const elements = {
-    loginForm: document.querySelector('#login-form-main'),
-    carList: document.querySelector('#car-list'),
-    carItems: document.querySelector('#car-items'),
-    addCarEmployeeButton: document.querySelector('#add-car-employee'),
-    addCarGuestButton: document.querySelector('#add-car-guest'),
-    addCarButtons: document.querySelector('#add-car-buttons'),
-    exportExcelButton: document.querySelector('#export-excel'),
-    employeeCarLimitMessage: document.querySelector('#employee-car-limit-message'),
-    carManagementButtons: document.querySelector('#car-management-buttons'),
-    logoutButton: document.querySelector('#logout-button'),
-    employeeInfo: document.querySelector('#employee-info'),
-    emailInput: document.querySelector('#email'),
-    editModal: document.querySelector('#editModal'),
-    addModal: document.querySelector('#addModal'),
-    editForm: document.querySelector('#editCarForm'),
-    addForm: document.querySelector('#addCarForm'),
-    editPersonType: document.querySelector('#editPersonType'),
-    addPersonType: document.querySelector('#addPersonType'),
-    editGuestFields: document.querySelector('#editGuestFields'),
-    addGuestFields: document.querySelector('#addGuestFields'),
-    editEmployeeFields: document.querySelector('#editEmployeeFields'),
-    addEmployeeFields: document.querySelector('#addEmployeeFields'),
-    refreshButton: document.querySelector('#refresh-button')
-  };
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+  <script>
+    // Main application module
+    const CarManagementApp = (function () {
+      let userCars = [];
+      let userEmail = '';
+      let isEmployee = false;
+      let currentAddCarType = '';
 
-  // API Calls
-  const api = {
-    login: (email) => apiCall('login', { email }),
-    refresh: () => apiCall('refresh', { email: userEmail }),
-    createCar: (carData) => apiCall('create', { email: elements.emailInput.value, logChanges: { newCar: carData } }),
-    editCar: (carId, changes) => apiCall('edit', { email: elements.emailInput.value, carId, logChanges: changes }),
-    deleteCar: (carId, carData) => apiCall('delete', { email: elements.emailInput.value, carId, logChanges: { deletedCar: carData } })
-  };
+      const API_URL = 'https://prod-205.westeurope.logic.azure.com:443/workflows/1c6ac94dabbc496abd2ced8e2d0d610b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1n-Cl11CMQ2ymC6sy1P1d-oM9sp_UdHFNE_c-sK4gws';
 
-  function apiCall(action, data) {
-    return fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, ...data })
-    }).then(response => response.json());
-  }
+      // DOM Elements
+      const elements = {
+        loginForm: document.querySelector('#login-form-main'),
+        carList: document.querySelector('#car-list'),
+        carItems: document.querySelector('#car-items'),
+        addCarEmployeeButton: document.querySelector('#add-car-employee'),
+        addCarGuestButton: document.querySelector('#add-car-guest'),
+        addCarButtons: document.querySelector('#add-car-buttons'),
+        exportExcelButton: document.querySelector('#export-excel'),
+        employeeCarLimitMessage: document.querySelector('#employee-car-limit-message'),
+        carManagementButtons: document.querySelector('#car-management-buttons'),
+        logoutButton: document.querySelector('#logout-button'),
+        employeeInfo: document.querySelector('#employee-info'),
+        emailInput: document.querySelector('#email'),
+        editModal: document.querySelector('#editModal'),
+        addModal: document.querySelector('#addModal'),
+        editForm: document.querySelector('#editCarForm'),
+        addForm: document.querySelector('#addCarForm'),
+        editPersonType: document.querySelector('#editPersonType'),
+        addPersonType: document.querySelector('#addPersonType'),
+        editGuestFields: document.querySelector('#editGuestFields'),
+        addGuestFields: document.querySelector('#addGuestFields'),
+        editEmployeeFields: document.querySelector('#editEmployeeFields'),
+        addEmployeeFields: document.querySelector('#addEmployeeFields'),
+        refreshButton: document.querySelector('#refresh-button')
+      };
 
-  // Event Handlers
-  function handleLogin(event) {
-    event.preventDefault();
-    showLoading();
+      // API Calls
+      const api = {
+        login: (email) => apiCall('login', { email }),
+        refresh: () => apiCall('refresh', { email: userEmail }),
+        createCar: (carData) => apiCall('create', { email: elements.emailInput.value, logChanges: { newCar: carData } }),
+        editCar: (carId, changes) => apiCall('edit', { email: elements.emailInput.value, carId, logChanges: changes }),
+        deleteCar: (carId, carData) => apiCall('delete', { email: elements.emailInput.value, carId, logChanges: { deletedCar: carData } })
+      };
 
-    const email = elements.emailInput.value;
+      function apiCall(action, data) {
+        return fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, ...data })
+        }).then(response => response.json());
+      }
 
-    api.login(email)
-      .then(data => {
-        if (data.value && Array.isArray(data.value) && data.value.length > 0) {
-          if (data.value[0].employee && !data.value[0].CarNumber) {
-            userCars = [];
-            isEmployee = true;
-            const employeeData = data.value[0].employee;
-            displayEmployeeInfo(employeeData);
-          } else {
-            userCars = data.value.map(car => ({
-              ID: car.ID,
-              CarNumber: car.CarNumber,
-              FullName: car.FullName,
-              PhoneNumber: car.PhoneNumber,
-              PersonType: car.PersonType,
-              Status: car.Status,
-              StartingDate: car.StartingDate,
-              Email: car.Email,
-              GuestDate: car.GuestDate,
-              GuestHoursFrom: car.GuestHoursFrom,
-              GuestHoursTo: car.GuestHoursTo
-            }));
+      // Event Handlers
+      function handleLogin(event) {
+        event.preventDefault();
+        showLoading();
 
-            isEmployee = !!data.value[0].employee;
-            if (isEmployee) {
-              const employeeData = data.value[0].employee;
-              displayEmployeeInfo(employeeData);
+        const email = elements.emailInput.value;
+
+        api.login(email)
+          .then(data => {
+            if (data.value && Array.isArray(data.value) && data.value.length > 0) {
+              if (data.value[0].employee && !data.value[0].CarNumber) {
+                userCars = [];
+                isEmployee = true;
+                const employeeData = data.value[0].employee;
+                displayEmployeeInfo(employeeData);
+              } else {
+                userCars = data.value.map(car => ({
+                  ID: car.ID,
+                  CarNumber: car.CarNumber,
+                  FullName: car.FullName,
+                  PhoneNumber: car.PhoneNumber,
+                  PersonType: car.PersonType,
+                  Status: car.Status,
+                  StartingDate: car.StartingDate,
+                  Email: car.Email,
+                  GuestDate: car.GuestDate,
+                  GuestHoursFrom: car.GuestHoursFrom,
+                  GuestHoursTo: car.GuestHoursTo
+                }));
+
+                isEmployee = !!data.value[0].employee;
+                if (isEmployee) {
+                  const employeeData = data.value[0].employee;
+                  displayEmployeeInfo(employeeData);
+                } else {
+                  displayGuestInfo(email);
+                }
+              }
             } else {
+              userCars = [];
+              isEmployee = false;
               displayGuestInfo(email);
+              alert("לא נמצאו רכבים מקושרים לאימייל הזה. אתה מחובר כאורח.");
             }
-          }
-        } else {
-          userCars = [];
-          isEmployee = false;
-          displayGuestInfo(email);
-          alert("לא נמצאו רכבים מקושרים לאימייל הזה. אתה מחובר כאורח.");
+            userEmail = email;
+            localStorage.setItem('userEmail', email);
+            updateUIAfterLogin();
+          })
+          .catch(handleError)
+          .finally(hideLoading);
+      }
+
+      function handleExportExcel() {
+        if (userCars.length === 0) {
+          alert('אין רכבים לייצוא.');
+          return;
         }
-        userEmail = email;
-        localStorage.setItem('userEmail', email);
-        updateUIAfterLogin();
-      })
-      .catch(handleError)
-      .finally(hideLoading);
-  }
 
-  function handleExportExcel() {
-    if (userCars.length === 0) {
-      alert('אין רכבים לייצוא.');
-      return;
-    }
-    
-    showLoading();
-    
-    const fieldsToExport = [
-      { key: 'CarNumber', header: 'מספר רכב' },
-      { key: 'FullName', header: 'שם מלא' },
-      { key: 'PhoneNumber', header: 'מספר טלפון' },
-      { key: 'PersonType', header: 'סוג אדם' },
-      { key: 'Status', header: 'סטטוס' },
-      { key: 'StartingDate', header: 'תאריך התחלה' },
-      { key: 'GuestDate', header: 'תאריך אירוח' },
-      { key: 'GuestHoursFrom', header: 'שעות אירוח - מ' },
-      { key: 'GuestHoursTo', header: 'שעות אירוח - עד' }
-    ];
+        showLoading();
 
-    const exportData = userCars.map(car => {
-      const exportCar = {};
-      fieldsToExport.forEach(field => {
-        exportCar[field.header] = car[field.key];
-      });
-      return exportCar;
-    });
+        const fieldsToExport = [
+          { key: 'CarNumber', header: 'מספר רכב' },
+          { key: 'FullName', header: 'שם מלא' },
+          { key: 'PhoneNumber', header: 'מספר טלפון' },
+          { key: 'PersonType', header: 'סוג אדם' },
+          { key: 'Status', header: 'סטטוס' },
+          { key: 'StartingDate', header: 'תאריך התחלה' },
+          { key: 'GuestDate', header: 'תאריך אירוח' },
+          { key: 'GuestHoursFrom', header: 'שעות אירוח - מ' },
+          { key: 'GuestHoursTo', header: 'שעות אירוח - עד' }
+        ];
 
-    const ws = XLSX.utils.json_to_sheet(exportData, {
-      header: fieldsToExport.map(field => field.header)
-    });
+        const exportData = userCars.map(car => {
+          const exportCar = {};
+          fieldsToExport.forEach(field => {
+            exportCar[field.header] = car[field.key];
+          });
+          return exportCar;
+        });
 
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Cars");
+        const ws = XLSX.utils.json_to_sheet(exportData, {
+          header: fieldsToExport.map(field => field.header)
+        });
 
-    XLSX.writeFile(wb, "car_list.xlsx");
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Cars");
 
-    hideLoading();
-  }
+        XLSX.writeFile(wb, "car_list.xlsx");
 
-  function handleLogout() {
-    userCars = [];
-    userEmail = '';
-    isEmployee = false;
-    elements.emailInput.value = '';
-    localStorage.removeItem('userEmail');
-    updateUIAfterLogout();
-  }
-  function validateTimeOrder(fromTime, toTime) {
-  if (!fromTime || !toTime) return true; // If either time is not set, consider it valid
-  return fromTime < toTime;
-}
-  function handleEditSubmit(event) {
-    event.preventDefault();
-    showLoading();
-    const carId = document.getElementById('editCarId').value;
-    const newFullName = document.getElementById('editFullName').value;
-    const newCarNumber = document.getElementById('editCarNumber').value;
-    const newPhoneNumber = document.getElementById('editPhoneNumber').value;
-    const newPersonType = document.getElementById('editPersonType').value;
-    const newStartingDate = document.getElementById('editStartingDate').value;
-    const newGuestDate = document.getElementById('editGuestDate').value;
-    const newGuestHoursFrom = document.getElementById('editGuestHoursFrom').value;
-    const newGuestHoursTo = document.getElementById('editGuestHoursTo').value;
+        hideLoading();
+      }
 
-    if (!validateCarNumber(newCarNumber)) {
-      alert('מספר הרכב אינו תקין. אנא הזן מספר רכב חוקי.');
-      hideLoading();
-      return;
-    }
+      function handleLogout() {
+        userCars = [];
+        userEmail = '';
+        isEmployee = false;
+        elements.emailInput.value = '';
+        localStorage.removeItem('userEmail');
+        updateUIAfterLogout();
+      }
+      function validateTimeOrder(fromTime, toTime) {
+        if (!fromTime || !toTime) return true; // If either time is not set, consider it valid
+        return fromTime < toTime;
+      }
+      function handleEditSubmit(event) {
+        event.preventDefault();
+        showLoading();
+        const carId = document.getElementById('editCarId').value;
+        const newFullName = document.getElementById('editFullName').value;
+        const newCarNumber = document.getElementById('editCarNumber').value;
+        const newPhoneNumber = document.getElementById('editPhoneNumber').value;
+        const newPersonType = document.getElementById('editPersonType').value;
+        const newStartingDate = document.getElementById('editStartingDate').value;
+        const newGuestDate = document.getElementById('editGuestDate').value;
+        const newGuestHoursFrom = document.getElementById('editGuestHoursFrom').value;
+        const newGuestHoursTo = document.getElementById('editGuestHoursTo').value;
 
-    if (!validatePhoneNumber(newPhoneNumber)) {
-      alert('מספר הטלפון אינו תקין. אנא הזן מספר טלפון חוקי.');
-      hideLoading();
-      return;
-    }
-    if (newPersonType === 'Guest' && !validateTimeOrder(newGuestHoursFrom, newGuestHoursTo)) {
-    alert('שעת סיום האירוח חייבת להיות מאוחרת יותר משעת תחילת האירוח.');
-    hideLoading();
-    return;
-  }
+        if (!validateCarNumber(newCarNumber)) {
+          alert('מספר הרכב אינו תקין. אנא הזן מספר רכב חוקי.');
+          hideLoading();
+          return;
+        }
 
-    const oldCar = userCars.find(c => c.ID === parseInt(carId));
+        if (!validatePhoneNumber(newPhoneNumber)) {
+          alert('מספר הטלפון אינו תקין. אנא הזן מספר טלפון חוקי.');
+          hideLoading();
+          return;
+        }
+        if (newPersonType === 'Guest' && !validateTimeOrder(newGuestHoursFrom, newGuestHoursTo)) {
+          alert('שעת סיום האירוח חייבת להיות מאוחרת יותר משעת תחילת האירוח.');
+          hideLoading();
+          return;
+        }
 
-    const changes = {
-      FullName: newFullName !== oldCar.FullName ? { before: oldCar.FullName, after: newFullName } : null,
-      CarNumber: newCarNumber !== oldCar.CarNumber ? { before: oldCar.CarNumber, after: newCarNumber } : null,
-      PhoneNumber: newPhoneNumber !== oldCar.PhoneNumber ? { before: oldCar.PhoneNumber, after: newPhoneNumber } : null,
-      PersonType: newPersonType !== oldCar.PersonType ? { before: oldCar.PersonType, after: newPersonType } : null,
-      StartingDate: newStartingDate !== oldCar.StartingDate ? { before: oldCar.StartingDate, after: newStartingDate } : null,
-      GuestDate: newGuestDate !== oldCar.GuestDate ? { before: oldCar.GuestDate, after: newGuestDate } : null,
-      GuestHoursFrom: newGuestHoursFrom !== oldCar.GuestHoursFrom ? { before: oldCar.GuestHoursFrom, after: newGuestHoursFrom } : null,
-      GuestHoursTo: newGuestHoursTo !== oldCar.GuestHoursTo ? { before: oldCar.GuestHoursTo, after: newGuestHoursTo } : null
-    };
+        const oldCar = userCars.find(c => c.ID === parseInt(carId));
 
-    const logChanges = Object.fromEntries(
-      Object.entries(changes).filter(([_, value]) => value !== null)
-    );
+        const changes = {
+          FullName: newFullName !== oldCar.FullName ? { before: oldCar.FullName, after: newFullName } : null,
+          CarNumber: newCarNumber !== oldCar.CarNumber ? { before: oldCar.CarNumber, after: newCarNumber } : null,
+          PhoneNumber: newPhoneNumber !== oldCar.PhoneNumber ? { before: oldCar.PhoneNumber, after: newPhoneNumber } : null,
+          PersonType: newPersonType !== oldCar.PersonType ? { before: oldCar.PersonType, after: newPersonType } : null,
+          StartingDate: newStartingDate !== oldCar.StartingDate ? { before: oldCar.StartingDate, after: newStartingDate } : null,
+          GuestDate: newGuestDate !== oldCar.GuestDate ? { before: oldCar.GuestDate, after: newGuestDate } : null,
+          GuestHoursFrom: newGuestHoursFrom !== oldCar.GuestHoursFrom ? { before: oldCar.GuestHoursFrom, after: newGuestHoursFrom } : null,
+          GuestHoursTo: newGuestHoursTo !== oldCar.GuestHoursTo ? { before: oldCar.GuestHoursTo, after: newGuestHoursTo } : null
+        };
 
-    api.editCar(carId, logChanges)
-      .then((response) => {
-        alert('הבקשה לעדכון נשלחה בהצלחה');
-        closeEditModal();
-        updateDataFromResponse(response);
-      })
-      .catch(handleError)
-      .finally(hideLoading);
-  }
+        const logChanges = Object.fromEntries(
+          Object.entries(changes).filter(([_, value]) => value !== null)
+        );
 
-  function handleAddSubmit(event) {
-    event.preventDefault();
-    showLoading();
-    
-    const email = elements.emailInput.value;
-    
-    const newFullName = document.getElementById('addFullName').value;
-    const newCarNumber = document.getElementById('addCarNumber').value;
-    const newPhoneNumber = document.getElementById('addPhoneNumber').value;
-    const personType = currentAddCarType;
-    const startingDate = document.getElementById('addStartingDate').value;
-    const guestDate = document.getElementById('addGuestDate').value;
-    const guestHoursFrom = document.getElementById('addGuestHoursFrom').value;
-    const guestHoursTo = document.getElementById('addGuestHoursTo').value;
+        api.editCar(carId, logChanges)
+          .then((response) => {
+            alert('הבקשה לעדכון נשלחה בהצלחה');
+            closeEditModal();
+            updateDataFromResponse(response);
+          })
+          .catch(handleError)
+          .finally(hideLoading);
+      }
 
-    if (!validateCarNumber(newCarNumber)) {
-      alert('מספר הרכב אינו תקין. אנא הזן מספר רכב חוקי.');
-      hideLoading();
-      return;
-    }
+      function handleAddSubmit(event) {
+        event.preventDefault();
+        showLoading();
 
-    if (!validatePhoneNumber(newPhoneNumber)) {
-      alert('מספר הטלפון אינו תקין. אנא הזן מספר טלפון חוקי.');
-      hideLoading();
-      return;
-    }
+        const email = elements.emailInput.value;
 
-    if (isEmployee && personType === 'Employee' && userCars.filter(car => car.PersonType === 'Employee').length >= 2) {
-      alert('לא ניתן להוסיף יותר מ-2 רכבי עובד.');
-      hideLoading();
-      return;
-    }
-    if (personType === 'Guest' && !validateTimeOrder(guestHoursFrom, guestHoursTo)) {
-    alert('שעת סיום האירוח חייבת להיות מאוחרת יותר משעת תחילת האירוח.');
-    hideLoading();
-    return;
-  }
+        const newFullName = document.getElementById('addFullName').value;
+        const newCarNumber = document.getElementById('addCarNumber').value;
+        const newPhoneNumber = document.getElementById('addPhoneNumber').value;
+        const personType = currentAddCarType;
+        const startingDate = document.getElementById('addStartingDate').value;
+        const guestDate = document.getElementById('addGuestDate').value;
+        const guestHoursFrom = document.getElementById('addGuestHoursFrom').value;
+        const guestHoursTo = document.getElementById('addGuestHoursTo').value;
 
-    const newCarData = {
-      FullName: newFullName,
-      CarNumber: newCarNumber,
-      PhoneNumber: newPhoneNumber,
-      PersonType: personType,
-      StartingDate: personType === 'Employee' ? startingDate : null,
-      GuestDate: personType === 'Guest' ? guestDate : null,
-      GuestHoursFrom: personType === 'Guest' ? guestHoursFrom : null,
-      GuestHoursTo: personType === 'Guest' ? guestHoursTo : null,
-      Email: email
-    };
+        if (!validateCarNumber(newCarNumber)) {
+          alert('מספר הרכב אינו תקין. אנא הזן מספר רכב חוקי.');
+          hideLoading();
+          return;
+        }
 
-    api.createCar(newCarData)
-      .then((response) => {
-        alert('הבקשה להוספה נשלחה בהצלחה');
-        closeAddModal();
-        elements.addForm.reset();
-        updateDataFromResponse(response);
-      })
-      .catch(handleError)
-      .finally(hideLoading);
-  }
+        if (!validatePhoneNumber(newPhoneNumber)) {
+          alert('מספר הטלפון אינו תקין. אנא הזן מספר טלפון חוקי.');
+          hideLoading();
+          return;
+        }
 
-  // UI Updates
-  function updateUIAfterLogin() {
-    safeToggleClass(elements.carList, 'hidden', false);
-    safeToggleClass(elements.loginForm, 'hidden', true);
-    safeToggleClass(elements.logoutButton, 'hidden', false);
-    safeToggleClass(elements.carManagementButtons, 'hidden', false);
-    safeToggleClass(elements.refreshButton, 'hidden', false);
-    updateAddCarButtonsVisibility();
-    refreshCarList();
-  }
-  function handleRefresh() {
-      refreshUserData();
-    }
-  function updateUIAfterLogout() {
-    safeToggleClass(elements.carList, 'hidden', true);
-    safeToggleClass(elements.employeeInfo, 'hidden', true);
-    safeToggleClass(elements.loginForm, 'hidden', false);
-    safeToggleClass(elements.logoutButton, 'hidden', true);
-    safeToggleClass(elements.refreshButton, 'hidden', true);
-    safeToggleClass(elements.carManagementButtons, 'hidden', true);
-  }
+        if (isEmployee && personType === 'Employee' && userCars.filter(car => car.PersonType === 'Employee').length >= 2) {
+          alert('לא ניתן להוסיף יותר מ-2 רכבי עובד.');
+          hideLoading();
+          return;
+        }
+        if (personType === 'Guest' && !validateTimeOrder(guestHoursFrom, guestHoursTo)) {
+          alert('שעת סיום האירוח חייבת להיות מאוחרת יותר משעת תחילת האירוח.');
+          hideLoading();
+          return;
+        }
 
-  function displayEmployeeInfo(employee) {
-  safeToggleClass(elements.employeeInfo, 'hidden', false);
-  elements.employeeInfo.innerHTML = `
+        const newCarData = {
+          FullName: newFullName,
+          CarNumber: newCarNumber,
+          PhoneNumber: newPhoneNumber,
+          PersonType: personType,
+          StartingDate: personType === 'Employee' ? startingDate : null,
+          GuestDate: personType === 'Guest' ? guestDate : null,
+          GuestHoursFrom: personType === 'Guest' ? guestHoursFrom : null,
+          GuestHoursTo: personType === 'Guest' ? guestHoursTo : null,
+          Email: email
+        };
+
+        api.createCar(newCarData)
+          .then((response) => {
+            alert('הבקשה להוספה נשלחה בהצלחה');
+            closeAddModal();
+            elements.addForm.reset();
+            updateDataFromResponse(response);
+          })
+          .catch(handleError)
+          .finally(hideLoading);
+      }
+
+      // UI Updates
+      function updateUIAfterLogin() {
+        safeToggleClass(elements.carList, 'hidden', false);
+        safeToggleClass(elements.loginForm, 'hidden', true);
+        safeToggleClass(elements.logoutButton, 'hidden', false);
+        safeToggleClass(elements.carManagementButtons, 'hidden', false);
+        safeToggleClass(elements.refreshButton, 'hidden', false);
+        updateAddCarButtonsVisibility();
+        refreshCarList();
+      }
+      function handleRefresh() {
+        refreshUserData();
+      }
+      function updateUIAfterLogout() {
+        safeToggleClass(elements.carList, 'hidden', true);
+        safeToggleClass(elements.employeeInfo, 'hidden', true);
+        safeToggleClass(elements.loginForm, 'hidden', false);
+        safeToggleClass(elements.logoutButton, 'hidden', true);
+        safeToggleClass(elements.refreshButton, 'hidden', true);
+        safeToggleClass(elements.carManagementButtons, 'hidden', true);
+      }
+
+      function displayEmployeeInfo(employee) {
+        safeToggleClass(elements.employeeInfo, 'hidden', false);
+        elements.employeeInfo.innerHTML = `
     <div class="flex items-start p-4 bg-white shadow-md rounded-lg">
       <img src="assets/Untitled design (24).png" alt="${employee.DisplayName}" 
         class="w-20 h-20 rounded-full mr-6 border-2 border-gray-300 object-contain">
@@ -687,14 +697,14 @@ const CarManagementApp = (function () {
     </div>
     
   `;
-}
+      }
 
 
 
 
-  function displayGuestInfo(email) {
-    safeToggleClass(elements.employeeInfo, 'hidden', false);
-    elements.employeeInfo.innerHTML = `
+      function displayGuestInfo(email) {
+        safeToggleClass(elements.employeeInfo, 'hidden', false);
+        elements.employeeInfo.innerHTML = `
       <div class="flex items-center">
         <i class="fas fa-user-circle text-5xl text-gray-400 mr-4"></i>
         <div>
@@ -703,19 +713,19 @@ const CarManagementApp = (function () {
         </div>
       </div>
     `;
-  }
+      }
 
-  function refreshCarList() {
-  showLoading();
-  if (elements.carItems) {
-    elements.carItems.innerHTML = '';
-    
-    // Group cars by type
-    const employeeCars = userCars.filter(car => car.PersonType === 'Employee');
-    const guestCars = userCars.filter(car => car.PersonType === 'Guest');
+      function refreshCarList() {
+        showLoading();
+        if (elements.carItems) {
+          elements.carItems.innerHTML = '';
 
-    // Function to create car HTML
-    const createCarHTML = (car) => `
+          // Group cars by type
+          const employeeCars = userCars.filter(car => car.PersonType === 'Employee');
+          const guestCars = userCars.filter(car => car.PersonType === 'Guest');
+
+          // Function to create car HTML
+          const createCarHTML = (car) => `
       <div class="p-3 mb-3 bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="flex justify-between items-center mb-2">
           <h3 class="text-lg font-semibold text-gray-800 flex items-center">
@@ -730,13 +740,12 @@ const CarManagementApp = (function () {
               ${car.Status === 'ממתין לעדכון' ? 'bg-yellow-100 text-yellow-700' : ''}
               ${car.Status === 'ממתין למחיקה' ? 'bg-red-100 text-red-700' : ''}
               ${car.Status === 'ממתין להוספה' ? 'bg-blue-100 text-blue-700' : ''}">
-              <i class="mr-1 ${
-                car.Status === 'אושר' ? 'fas fa-check-circle' :
-                car.Status === 'ממתין לעדכון' ? 'fas fa-clock' :
+              <i class="mr-1 ${car.Status === 'אושר' ? 'fas fa-check-circle' :
+              car.Status === 'ממתין לעדכון' ? 'fas fa-clock' :
                 car.Status === 'ממתין למחיקה' ? 'fas fa-trash-alt' :
-                car.Status === 'ממתין להוספה' ? 'fas fa-plus-circle' :
-                'fas fa-question-circle'
-              }"></i>
+                  car.Status === 'ממתין להוספה' ? 'fas fa-plus-circle' :
+                    'fas fa-question-circle'
+            }"></i>
               ${car.Status}
             </span>
           </div>
@@ -790,14 +799,15 @@ const CarManagementApp = (function () {
         </div>
 
         ${car.Status === 'אושר' ? `
-          <div class="mt-2 flex justify-end space-x-2">
-            <button onclick="CarManagementApp.openEditModal(${car.ID})" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition duration-150 ease-in-out flex items-center text-sm">
-              <i class="fas fa-edit mr-1"></i> ערוך
-            </button>
-            <button onclick="CarManagementApp.deleteCar(${car.ID})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition duration-150 ease-in-out flex items-center text-sm">
-              <i class="fas fa-trash-alt mr-1"></i> מחק
-            </button>
-          </div>
+<div class="mt-2 flex justify-end">
+    <button onclick="CarManagementApp.openEditModal(${car.ID})" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition duration-150 ease-in-out flex items-center text-sm">
+        <i class="fas fa-edit mr-1"></i> ערוך
+    </button>
+    <div style="width: 10px;"></div>
+    <button onclick="CarManagementApp.deleteCar(${car.ID})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition duration-150 ease-in-out flex items-center text-sm">
+        <i class="fas fa-trash-alt mr-1"></i> מחק
+    </button>
+</div>
         ` : `
           <div class="mt-2 text-center">
             <p class="text-sm text-gray-600">לא ניתן לערוך או למחוק רכב זה כרגע.</p>
@@ -806,419 +816,420 @@ const CarManagementApp = (function () {
       </div>
     `;
 
-    // Create and append employee cars group if exists
-    if (employeeCars.length > 0) {
-      const employeeGroup = document.createElement('div');
-      employeeGroup.className = 'mb-6';
-      employeeGroup.innerHTML = `
+          // Create and append employee cars group if exists
+          if (employeeCars.length > 0) {
+            const employeeGroup = document.createElement('div');
+            employeeGroup.className = 'mb-6';
+            employeeGroup.innerHTML = `
         <h2 class="text-xl font-bold mb-3 text-gray-800">רכבי עובד</h2>
         ${employeeCars.map(createCarHTML).join('')}
       `;
-      elements.carItems.appendChild(employeeGroup);
-    }
+            elements.carItems.appendChild(employeeGroup);
+          }
 
-    // Create and append guest cars group if exists
-    if (guestCars.length > 0) {
-      const guestGroup = document.createElement('div');
-      guestGroup.className = 'mb-6';
-      guestGroup.innerHTML = `
+          // Create and append guest cars group if exists
+          if (guestCars.length > 0) {
+            const guestGroup = document.createElement('div');
+            guestGroup.className = 'mb-6';
+            guestGroup.innerHTML = `
         <h2 class="text-xl font-bold mb-3 text-gray-800">רכבי אורח</h2>
         ${guestCars.map(createCarHTML).join('')}
       `;
-      elements.carItems.appendChild(guestGroup);
-    }
-  }
-
-  updateAddCarButtonsVisibility();
-  hideLoading();
-}
-
-  function updateAddCarButtonsVisibility() {
-    const employeeCarsCount = userCars.filter(car => car.PersonType === 'Employee').length;
-
-    if (isEmployee) {
-      safeToggleClass(elements.addCarEmployeeButton, 'hidden', false);
-      if (employeeCarsCount >= 2) {
-        safeToggleClass(elements.addCarEmployeeButton, 'hidden', true);
-        safeToggleClass(elements.employeeCarLimitMessage, 'hidden', false);
-      } else {
-        safeToggleClass(elements.employeeCarLimitMessage, 'hidden', true);
-      }
-    } else {
-      safeToggleClass(elements.addCarEmployeeButton, 'hidden', true);
-      safeToggleClass(elements.employeeCarLimitMessage, 'hidden', true);
-    }
-
-    // Guest car button is always visible
-    safeToggleClass(elements.addCarGuestButton, 'hidden', false);
-
-    // Export button is visible when there are cars
-    safeToggleClass(elements.exportExcelButton, 'hidden', userCars.length === 0);
-  }
-
-  // Modal Operations
-  function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      modal.classList.remove('hidden');
-    }
-  }
-
-  function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      modal.classList.add('hidden');
-    }
-  }
-
-  function openEditModal(carId) {
-  const car = userCars.find(c => c.ID === carId);
-  if (!car) {
-    alert('הרכב לא נמצא');
-    return;
-  }
-
-  document.getElementById('editCarId').value = car.ID;
-  document.getElementById('editFullName').value = car.FullName;
-  document.getElementById('editCarNumber').value = car.CarNumber;
-  document.getElementById('editPhoneNumber').value = car.PhoneNumber;
-  document.getElementById('editPersonType').value = car.PersonType;
-  document.getElementById('editStartingDate').value = car.StartingDate || '';
-  document.getElementById('editGuestDate').value = car.GuestDate || '';
-  document.getElementById('editGuestHoursFrom').value = car.GuestHoursFrom || '';
-  document.getElementById('editGuestHoursTo').value = car.GuestHoursTo || '';
-
-  const editPersonTypeSelect = document.getElementById('editPersonType');
-  
-  // Clear existing options
-  editPersonTypeSelect.innerHTML = '';
-
-  if (isEmployee) {
-    const employeeCarsCount = userCars.filter(c => c.PersonType === 'Employee').length;
-    
-    // If the current car is an Employee car, we don't count it towards the limit
-    const adjustedEmployeeCarsCount = car.PersonType === 'Employee' ? employeeCarsCount - 1 : employeeCarsCount;
-
-    if (adjustedEmployeeCarsCount >= 2) {
-      // Only add Guest option
-      editPersonTypeSelect.appendChild(new Option('אורח', 'Guest'));
-    } else {
-      // Add both options
-      editPersonTypeSelect.appendChild(new Option('עובד', 'Employee'));
-      editPersonTypeSelect.appendChild(new Option('אורח', 'Guest'));
-    }
-  } else {
-    // For non-employees, only show Guest option
-    editPersonTypeSelect.appendChild(new Option('אורח', 'Guest'));
-  }
-
-  // Set the current value
-  editPersonTypeSelect.value = car.PersonType;
-
-  toggleEditFields();
-  openModal('editModal');
-}
-
-  function openAddModal(type) {
-    currentAddCarType = type;
-    document.getElementById('addPersonType').value = type;
-    document.getElementById('addPersonType').disabled = true;
-    toggleAddFields();
-    openModal('addModal');
-  }
-
-  function toggleEditFields() {
-  const personType = elements.editPersonType.value;
-  safeToggleClass(elements.editGuestFields, 'hidden', personType !== 'Guest');
-  safeToggleClass(elements.editEmployeeFields, 'hidden', personType !== 'Employee');
-
-  // Add client-side validation for time inputs
-  if (personType === 'Guest') {
-    const fromTimeInput = document.getElementById('editGuestHoursFrom');
-    const toTimeInput = document.getElementById('editGuestHoursTo');
-
-    fromTimeInput.addEventListener('change', () => {
-      toTimeInput.min = fromTimeInput.value;
-    });
-
-    toTimeInput.addEventListener('change', () => {
-      if (toTimeInput.value <= fromTimeInput.value) {
-        toTimeInput.setCustomValidity('שעת סיום חייבת להיות מאוחרת יותר משעת התחלה');
-      } else {
-        toTimeInput.setCustomValidity('');
-      }
-    });
-  }
-}
-
-function toggleAddFields() {
-  const personType = currentAddCarType;
-  safeToggleClass(elements.addGuestFields, 'hidden', personType !== 'Guest');
-  safeToggleClass(elements.addEmployeeFields, 'hidden', personType !== 'Employee');
-
-  // Set required attributes and add client-side validation based on the person type
-  const startingDateInput = document.getElementById('addStartingDate');
-  const guestDateInput = document.getElementById('addGuestDate');
-  const guestHoursFromInput = document.getElementById('addGuestHoursFrom');
-  const guestHoursToInput = document.getElementById('addGuestHoursTo');
-
-  if (personType === 'Employee') {
-    startingDateInput.setAttribute('required', '');
-    guestDateInput.removeAttribute('required');
-    guestHoursFromInput.removeAttribute('required');
-    guestHoursToInput.removeAttribute('required');
-  } else {
-    startingDateInput.removeAttribute('required');
-    guestDateInput.setAttribute('required', '');
-    guestHoursFromInput.setAttribute('required', '');
-    guestHoursToInput.setAttribute('required', '');
-
-    // Add client-side validation for time inputs
-    guestHoursFromInput.addEventListener('change', () => {
-      guestHoursToInput.min = guestHoursFromInput.value;
-    });
-
-    guestHoursToInput.addEventListener('change', () => {
-      if (guestHoursToInput.value <= guestHoursFromInput.value) {
-        guestHoursToInput.setCustomValidity('שעת סיום חייבת להיות מאוחרת יותר משעת התחלה');
-      } else {
-        guestHoursToInput.setCustomValidity('');
-      }
-    });
-  }
-}
-
-  function closeEditModal() {
-    closeModal('editModal');
-  }
-
-  function closeAddModal() {
-    closeModal('addModal');
-    currentAddCarType = '';
-  }
-
-  // Car Operations
-  function deleteCar(carId) {
-    const car = userCars.find(c => c.ID === carId);
-    if (!car) {
-      alert('הרכב לא נמצא');
-      return;
-    }
-    if (confirm(`האם אתה בטוח שברצונך למחוק את הרכב ${car.CarNumber}?`)) {
-      showLoading();
-      api.deleteCar(carId, car)
-        .then((response) => {
-          alert('הבקשה למחיקה נשלחה בהצלחה');
-          updateDataFromResponse(response);
-        })
-        .catch(handleError)
-        .finally(hideLoading);
-    }
-  }
-
-  // Data Management
-  function updateDataFromResponse(response) {
-    let carData = [];
-
-    if (response && Array.isArray(response.value)) {
-      carData = response.value;
-    } else if (Array.isArray(response)) {
-      carData = response;
-    } else {
-      console.error('Unexpected response format:', response);
-      alert('אירעה שגיאה בעדכון הנתונים. אנא רענן את הדף ונסה שוב.');
-      return;
-    }
-
-    if (carData.length > 0) {
-      userCars = carData.map(car => ({
-        ID: car.ID,
-        CarNumber: car.CarNumber.toString(),
-        FullName: car.FullName,
-        PhoneNumber: car.PhoneNumber,
-        PersonType: car.PersonType,
-        Status: car.Status,
-        StartingDate: car.StartingDate,
-        Email: car.Email,
-        GuestDate: car.GuestDate,
-        GuestHoursFrom: car.GuestHoursFrom,
-        GuestHoursTo: car.GuestHoursTo
-      }));
-
-      isEmployee = !!carData[0].employee;
-
-      if (isEmployee && carData[0].employee) {
-        const employeeData = carData[0].employee;
-        displayEmployeeInfo({
-          DisplayName: employeeData.DisplayName,
-          JobTitle: employeeData.JobTitle,
-          Department: employeeData.Department,
-          Email: employeeData.Email
-        });
-      } else {
-        displayGuestInfo(userEmail);
-      }
-
-      refreshCarList();
-    } else {
-      console.log('No car data found in the response');
-      alert('לא נמצאו רכבים מקושרים לחשבון זה.');
-    }
-    hideLoading();
-  }
-
-  // Utility Functions
-  function showLoading() {
-    const loadingOverlay = document.getElementById('loading-overlay');
-    if (loadingOverlay) {
-      loadingOverlay.classList.add('visible');
-    }
-  }
-
-  function hideLoading() {
-    const loadingOverlay = document.getElementById('loading-overlay');
-    if (loadingOverlay) {
-      loadingOverlay.classList.remove('visible');
-    }
-  }
-
-  function handleError(error) {
-    console.error('Error:', error);
-    alert('אירעה שגיאה. אנא נסה שוב.');
-  }
-
-  function validateCarNumber(carNumber) {
-    return /^\d{7,8}$/.test(carNumber);
-  }
-
-  function validatePhoneNumber(phoneNumber) {
-    return /^05\d{8}$/.test(phoneNumber);
-  }
-
-  function safeToggleClass(element, className, force) {
-    if (element && element.classList) {
-      element.classList.toggle(className, force);
-    }
-  }
-
-  // Initialization
-  function init() {
-    // Check if all required elements exist
-    const requiredElements = [
-      'loginForm', 'carList', 'carItems', 'addCarEmployeeButton', 'addCarGuestButton',
-      'addCarButtons', 'exportExcelButton', 'employeeCarLimitMessage', 'carManagementButtons',
-      'logoutButton', 'employeeInfo', 'emailInput', 'editModal', 'addModal', 'editForm', 'addForm',
-      'editPersonType', 'addPersonType', 'editGuestFields', 'addGuestFields', 'editEmployeeFields', 'addEmployeeFields'
-    ];
-
-    const missingElements = requiredElements.filter(elementName => !elements[elementName]);
-
-    if (missingElements.length > 0) {
-      console.error('Missing required DOM elements:', missingElements);
-      alert('Some required page elements are missing. Please refresh the page or contact support.');
-      return;
-    }
-
-    // Setup event listeners
-    setupEventListeners();
-
-    // Setup data refresh
-    setupDataRefresh();
-
-    // Initialize UI state
-    updateUIInitialState();
-
-    // Check for existing session
-    checkExistingSession();
-
-    // Log initialization
-    console.log('Car Management App initialized successfully');
-  }
-
-  function setupEventListeners() {
-    elements.loginForm.addEventListener('submit', handleLogin);
-    elements.addCarEmployeeButton.addEventListener('click', () => openAddModal('Employee'));
-    elements.addCarGuestButton.addEventListener('click', () => openAddModal('Guest'));
-    elements.exportExcelButton.addEventListener('click', handleExportExcel);
-    elements.logoutButton.addEventListener('click', handleLogout);
-    elements.editForm.addEventListener('submit', handleEditSubmit);
-    elements.addForm.addEventListener('submit', handleAddSubmit);
-    elements.editPersonType.addEventListener('change', toggleEditFields);
-    elements.addPersonType.addEventListener('change', toggleAddFields);
-    elements.refreshButton.addEventListener('click', handleRefresh);
-
-    // Add event listeners for modal close buttons if they exist
-    const closeModalButtons = document.querySelectorAll('[data-close-modal]');
-    closeModalButtons.forEach(button => {
-      button.addEventListener('click', () => closeModal(button.dataset.closeModal));
-    });
-  }
-
-  function setupDataRefresh() {
-    // Set up periodic data refresh (e.g., every 5 minutes)
-    setInterval(() => {
-      if (userEmail) {
-        refreshUserData();
-      }
-    }, 300000); // 5 minutes
-  }
-
-  function updateUIInitialState() {
-    // Hide elements that should not be visible initially
-    safeToggleClass(elements.carList, 'hidden', true);
-    safeToggleClass(elements.logoutButton, 'hidden', true);
-    safeToggleClass(elements.carManagementButtons, 'hidden', true);
-    safeToggleClass(elements.employeeInfo, 'hidden', true);
-
-    // Show login form
-    safeToggleClass(elements.loginForm, 'hidden', false);
-
-    // Ensure modals are hidden
-    closeModal('editModal');
-    closeModal('addModal');
-  }
-
-  function checkExistingSession() {
-    // Check if there's a stored session (e.g., in localStorage)
-    const storedEmail = localStorage.getItem('userEmail');
-    if (storedEmail) {
-      elements.emailInput.value = storedEmail;
-      // Optionally, you can auto-login the user here
-      // handleLogin({ preventDefault: () => {} });
-    }
-  }
-
-  function refreshUserData() {
-    showLoading();
-    api.refresh()
-      .then(data => {
-        if (data.value && data.value.length > 0) {
-          updateDataFromResponse(data);
+            elements.carItems.appendChild(guestGroup);
+          }
         }
-      })
-      .catch(error => {
-        console.error('Error refreshing data:', error);
-        handleError(error);
-      })
-      .finally(hideLoading);
-  }
 
-  // Public methods
-  return {
-    init: init,
-    openEditModal: openEditModal,
-    closeEditModal: closeEditModal,
-    openAddModal: openAddModal,
-    closeAddModal: closeAddModal,
-    deleteCar: deleteCar,
-    toggleEditFields: toggleEditFields,
-    toggleAddFields: toggleAddFields,
-    refreshUserData: refreshUserData
-  };
-})();
+        updateAddCarButtonsVisibility();
+        hideLoading();
+      }
 
-// Initialize the app when the DOM is ready
-document.addEventListener('DOMContentLoaded', CarManagementApp.init);
+      function updateAddCarButtonsVisibility() {
+        const employeeCarsCount = userCars.filter(car => car.PersonType === 'Employee').length;
+
+        if (isEmployee) {
+          safeToggleClass(elements.addCarEmployeeButton, 'hidden', false);
+          if (employeeCarsCount >= 2) {
+            safeToggleClass(elements.addCarEmployeeButton, 'hidden', true);
+            safeToggleClass(elements.employeeCarLimitMessage, 'hidden', false);
+          } else {
+            safeToggleClass(elements.employeeCarLimitMessage, 'hidden', true);
+          }
+        } else {
+          safeToggleClass(elements.addCarEmployeeButton, 'hidden', true);
+          safeToggleClass(elements.employeeCarLimitMessage, 'hidden', true);
+        }
+
+        // Guest car button is always visible
+        safeToggleClass(elements.addCarGuestButton, 'hidden', false);
+
+        // Export button is visible when there are cars
+        safeToggleClass(elements.exportExcelButton, 'hidden', userCars.length === 0);
+      }
+
+      // Modal Operations
+      function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.remove('hidden');
+        }
+      }
+
+      function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add('hidden');
+        }
+      }
+
+      function openEditModal(carId) {
+        const car = userCars.find(c => c.ID === carId);
+        if (!car) {
+          alert('הרכב לא נמצא');
+          return;
+        }
+
+        document.getElementById('editCarId').value = car.ID;
+        document.getElementById('editFullName').value = car.FullName;
+        document.getElementById('editCarNumber').value = car.CarNumber;
+        document.getElementById('editPhoneNumber').value = car.PhoneNumber;
+        document.getElementById('editPersonType').value = car.PersonType;
+        document.getElementById('editStartingDate').value = car.StartingDate || '';
+        document.getElementById('editGuestDate').value = car.GuestDate || '';
+        document.getElementById('editGuestHoursFrom').value = car.GuestHoursFrom || '';
+        document.getElementById('editGuestHoursTo').value = car.GuestHoursTo || '';
+
+        const editPersonTypeSelect = document.getElementById('editPersonType');
+
+        // Clear existing options
+        editPersonTypeSelect.innerHTML = '';
+
+        if (isEmployee) {
+          const employeeCarsCount = userCars.filter(c => c.PersonType === 'Employee').length;
+
+          // If the current car is an Employee car, we don't count it towards the limit
+          const adjustedEmployeeCarsCount = car.PersonType === 'Employee' ? employeeCarsCount - 1 : employeeCarsCount;
+
+          if (adjustedEmployeeCarsCount >= 2) {
+            // Only add Guest option
+            editPersonTypeSelect.appendChild(new Option('אורח', 'Guest'));
+          } else {
+            // Add both options
+            editPersonTypeSelect.appendChild(new Option('עובד', 'Employee'));
+            editPersonTypeSelect.appendChild(new Option('אורח', 'Guest'));
+          }
+        } else {
+          // For non-employees, only show Guest option
+          editPersonTypeSelect.appendChild(new Option('אורח', 'Guest'));
+        }
+
+        // Set the current value
+        editPersonTypeSelect.value = car.PersonType;
+
+        toggleEditFields();
+        openModal('editModal');
+      }
+
+      function openAddModal(type) {
+        currentAddCarType = type;
+        document.getElementById('addPersonType').value = type;
+        document.getElementById('addPersonType').disabled = true;
+        toggleAddFields();
+        openModal('addModal');
+      }
+
+      function toggleEditFields() {
+        const personType = elements.editPersonType.value;
+        safeToggleClass(elements.editGuestFields, 'hidden', personType !== 'Guest');
+        safeToggleClass(elements.editEmployeeFields, 'hidden', personType !== 'Employee');
+
+        // Add client-side validation for time inputs
+        if (personType === 'Guest') {
+          const fromTimeInput = document.getElementById('editGuestHoursFrom');
+          const toTimeInput = document.getElementById('editGuestHoursTo');
+
+          fromTimeInput.addEventListener('change', () => {
+            toTimeInput.min = fromTimeInput.value;
+          });
+
+          toTimeInput.addEventListener('change', () => {
+            if (toTimeInput.value <= fromTimeInput.value) {
+              toTimeInput.setCustomValidity('שעת סיום חייבת להיות מאוחרת יותר משעת התחלה');
+            } else {
+              toTimeInput.setCustomValidity('');
+            }
+          });
+        }
+      }
+
+      function toggleAddFields() {
+        const personType = currentAddCarType;
+        safeToggleClass(elements.addGuestFields, 'hidden', personType !== 'Guest');
+        safeToggleClass(elements.addEmployeeFields, 'hidden', personType !== 'Employee');
+
+        // Set required attributes and add client-side validation based on the person type
+        const startingDateInput = document.getElementById('addStartingDate');
+        const guestDateInput = document.getElementById('addGuestDate');
+        const guestHoursFromInput = document.getElementById('addGuestHoursFrom');
+        const guestHoursToInput = document.getElementById('addGuestHoursTo');
+
+        if (personType === 'Employee') {
+          startingDateInput.setAttribute('required', '');
+          guestDateInput.removeAttribute('required');
+          guestHoursFromInput.removeAttribute('required');
+          guestHoursToInput.removeAttribute('required');
+        } else {
+          startingDateInput.removeAttribute('required');
+          guestDateInput.setAttribute('required', '');
+          guestHoursFromInput.setAttribute('required', '');
+          guestHoursToInput.setAttribute('required', '');
+
+          // Add client-side validation for time inputs
+          guestHoursFromInput.addEventListener('change', () => {
+            guestHoursToInput.min = guestHoursFromInput.value;
+          });
+
+          guestHoursToInput.addEventListener('change', () => {
+            if (guestHoursToInput.value <= guestHoursFromInput.value) {
+              guestHoursToInput.setCustomValidity('שעת סיום חייבת להיות מאוחרת יותר משעת התחלה');
+            } else {
+              guestHoursToInput.setCustomValidity('');
+            }
+          });
+        }
+      }
+
+      function closeEditModal() {
+        closeModal('editModal');
+      }
+
+      function closeAddModal() {
+        closeModal('addModal');
+        currentAddCarType = '';
+      }
+
+      // Car Operations
+      function deleteCar(carId) {
+        const car = userCars.find(c => c.ID === carId);
+        if (!car) {
+          alert('הרכב לא נמצא');
+          return;
+        }
+        if (confirm(`האם אתה בטוח שברצונך למחוק את הרכב ${car.CarNumber}?`)) {
+          showLoading();
+          api.deleteCar(carId, car)
+            .then((response) => {
+              alert('הבקשה למחיקה נשלחה בהצלחה');
+              updateDataFromResponse(response);
+            })
+            .catch(handleError)
+            .finally(hideLoading);
+        }
+      }
+
+      // Data Management
+      function updateDataFromResponse(response) {
+        let carData = [];
+
+        if (response && Array.isArray(response.value)) {
+          carData = response.value;
+        } else if (Array.isArray(response)) {
+          carData = response;
+        } else {
+          console.error('Unexpected response format:', response);
+          alert('אירעה שגיאה בעדכון הנתונים. אנא רענן את הדף ונסה שוב.');
+          return;
+        }
+
+        if (carData.length > 0) {
+          userCars = carData.map(car => ({
+            ID: car.ID,
+            CarNumber: car.CarNumber.toString(),
+            FullName: car.FullName,
+            PhoneNumber: car.PhoneNumber,
+            PersonType: car.PersonType,
+            Status: car.Status,
+            StartingDate: car.StartingDate,
+            Email: car.Email,
+            GuestDate: car.GuestDate,
+            GuestHoursFrom: car.GuestHoursFrom,
+            GuestHoursTo: car.GuestHoursTo
+          }));
+
+          isEmployee = !!carData[0].employee;
+
+          if (isEmployee && carData[0].employee) {
+            const employeeData = carData[0].employee;
+            displayEmployeeInfo({
+              DisplayName: employeeData.DisplayName,
+              JobTitle: employeeData.JobTitle,
+              Department: employeeData.Department,
+              Email: employeeData.Email
+            });
+          } else {
+            displayGuestInfo(userEmail);
+          }
+
+          refreshCarList();
+        } else {
+          console.log('No car data found in the response');
+          alert('לא נמצאו רכבים מקושרים לחשבון זה.');
+        }
+        hideLoading();
+      }
+
+      // Utility Functions
+      function showLoading() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+          loadingOverlay.classList.add('visible');
+        }
+      }
+
+      function hideLoading() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+          loadingOverlay.classList.remove('visible');
+        }
+      }
+
+      function handleError(error) {
+        console.error('Error:', error);
+        alert('אירעה שגיאה. אנא נסה שוב.');
+      }
+
+      function validateCarNumber(carNumber) {
+        return /^\d{7,8}$/.test(carNumber);
+      }
+
+      function validatePhoneNumber(phoneNumber) {
+        return /^05\d{8}$/.test(phoneNumber);
+      }
+
+      function safeToggleClass(element, className, force) {
+        if (element && element.classList) {
+          element.classList.toggle(className, force);
+        }
+      }
+
+      // Initialization
+      function init() {
+        // Check if all required elements exist
+        const requiredElements = [
+          'loginForm', 'carList', 'carItems', 'addCarEmployeeButton', 'addCarGuestButton',
+          'addCarButtons', 'exportExcelButton', 'employeeCarLimitMessage', 'carManagementButtons',
+          'logoutButton', 'employeeInfo', 'emailInput', 'editModal', 'addModal', 'editForm', 'addForm',
+          'editPersonType', 'addPersonType', 'editGuestFields', 'addGuestFields', 'editEmployeeFields', 'addEmployeeFields'
+        ];
+
+        const missingElements = requiredElements.filter(elementName => !elements[elementName]);
+
+        if (missingElements.length > 0) {
+          console.error('Missing required DOM elements:', missingElements);
+          alert('Some required page elements are missing. Please refresh the page or contact support.');
+          return;
+        }
+
+        // Setup event listeners
+        setupEventListeners();
+
+        // Setup data refresh
+        setupDataRefresh();
+
+        // Initialize UI state
+        updateUIInitialState();
+
+        // Check for existing session
+        checkExistingSession();
+
+        // Log initialization
+        console.log('Car Management App initialized successfully');
+      }
+
+      function setupEventListeners() {
+        elements.loginForm.addEventListener('submit', handleLogin);
+        elements.addCarEmployeeButton.addEventListener('click', () => openAddModal('Employee'));
+        elements.addCarGuestButton.addEventListener('click', () => openAddModal('Guest'));
+        elements.exportExcelButton.addEventListener('click', handleExportExcel);
+        elements.logoutButton.addEventListener('click', handleLogout);
+        elements.editForm.addEventListener('submit', handleEditSubmit);
+        elements.addForm.addEventListener('submit', handleAddSubmit);
+        elements.editPersonType.addEventListener('change', toggleEditFields);
+        elements.addPersonType.addEventListener('change', toggleAddFields);
+        elements.refreshButton.addEventListener('click', handleRefresh);
+
+        // Add event listeners for modal close buttons if they exist
+        const closeModalButtons = document.querySelectorAll('[data-close-modal]');
+        closeModalButtons.forEach(button => {
+          button.addEventListener('click', () => closeModal(button.dataset.closeModal));
+        });
+      }
+
+      function setupDataRefresh() {
+        // Set up periodic data refresh (e.g., every 5 minutes)
+        setInterval(() => {
+          if (userEmail) {
+            refreshUserData();
+          }
+        }, 300000); // 5 minutes
+      }
+
+      function updateUIInitialState() {
+        // Hide elements that should not be visible initially
+        safeToggleClass(elements.carList, 'hidden', true);
+        safeToggleClass(elements.logoutButton, 'hidden', true);
+        safeToggleClass(elements.carManagementButtons, 'hidden', true);
+        safeToggleClass(elements.employeeInfo, 'hidden', true);
+
+        // Show login form
+        safeToggleClass(elements.loginForm, 'hidden', false);
+
+        // Ensure modals are hidden
+        closeModal('editModal');
+        closeModal('addModal');
+      }
+
+      function checkExistingSession() {
+        // Check if there's a stored session (e.g., in localStorage)
+        const storedEmail = localStorage.getItem('userEmail');
+        if (storedEmail) {
+          elements.emailInput.value = storedEmail;
+          // Optionally, you can auto-login the user here
+          // handleLogin({ preventDefault: () => {} });
+        }
+      }
+
+      function refreshUserData() {
+        showLoading();
+        api.refresh()
+          .then(data => {
+            if (data.value && data.value.length > 0) {
+              updateDataFromResponse(data);
+            }
+          })
+          .catch(error => {
+            console.error('Error refreshing data:', error);
+            handleError(error);
+          })
+          .finally(hideLoading);
+      }
+
+      // Public methods
+      return {
+        init: init,
+        openEditModal: openEditModal,
+        closeEditModal: closeEditModal,
+        openAddModal: openAddModal,
+        closeAddModal: closeAddModal,
+        deleteCar: deleteCar,
+        toggleEditFields: toggleEditFields,
+        toggleAddFields: toggleAddFields,
+        refreshUserData: refreshUserData
+      };
+    })();
+
+    // Initialize the app when the DOM is ready
+    document.addEventListener('DOMContentLoaded', CarManagementApp.init);
   </script>
 </body>
+
 </html>
